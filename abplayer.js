@@ -10,6 +10,8 @@ function Track(data) {
 	this.data = data;
 	this.player = this.createPlayer();
     this.selected = false;
+    this.$ui = null;
+    this.audition = null;
 };
 
 Track.prototype.createPlayer = function() {
@@ -21,6 +23,8 @@ Track.prototype.createPlayer = function() {
 
 Track.prototype.play = function(time) {
 	var t = time !== undefined ? time : currentTime();
+	if (this.audition.restart)
+		t = 0;
 	console.log("playing with currentTime=" + t);
 	this.player.jPlayer('pauseOthers');
 	this.player.jPlayer('play', t);
@@ -33,12 +37,14 @@ Track.prototype.jplayer = function() {
 	this.player.jPlayer.apply(this.player.jPlayer, arguments);
 };
 
-function Audition(tracks) {
+function Audition(tracks, restart=false) {
     this.tracks = tracks;
+    this.restart = restart;
     this.initUI();
 }
 
 Audition.prototype.initUI = function() {
+	let that = this;
     $tracksContainer = $("#tracks");
     $i = 0;
     $.each(this.tracks, function(_, track) {
@@ -51,6 +57,7 @@ Audition.prototype.initUI = function() {
         var play = function() { track.play(); };
         $container.click(play);
         track.$ui = $container;
+        track.audition = that;
         $tracksContainer.append($container);
         ++$i;
     });

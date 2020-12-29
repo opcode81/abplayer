@@ -174,6 +174,8 @@ $(document).ready(function(){
 	var tracks = [
             <?php
             error_reporting(E_ALL);
+            
+            // create list of tracks to load
             $tracks = array();
             if (isset($_GET["d"])) {
                 $dir = $_GET["d"];
@@ -189,6 +191,8 @@ $(document).ready(function(){
                     }
                 }
             }
+            
+            // write JS array
             sort($tracks);
             $i = 0;
             foreach($tracks as $t) {
@@ -198,7 +202,10 @@ $(document).ready(function(){
             }
             ?>
         ];
-	window.audition = new Audition(tracks);
+    <?php
+    $restart = isset($_GET["restart"]) && $_GET["restart"] ? "true" : "false";
+    ?>
+	window.audition = new Audition(tracks, <?=$restart?>);
     $(window).resize($.proxy(window.audition.adjustGeometry, window.audition));
 });
 </script>
