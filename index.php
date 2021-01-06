@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <title>A/B Player</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link href="dist/skin/blue.monday/css/jplayer.black.monday.css" rel="stylesheet" type="text/css" />
+<link href="lib/jplayer/skin/blue.monday/css/jplayer.black.monday.css" rel="stylesheet" type="text/css" />
 <meta charset="utf-8"> 
 <style>
     * { 
@@ -167,7 +167,7 @@
     }
 </style>
 <script type="text/javascript" src="lib/jquery.min.js"></script>
-<script type="text/javascript" src="dist/jplayer/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="lib/jplayer/jplayer/jquery.jplayer.min.js"></script>
 <script type="text/javascript" src="abplayer.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
