@@ -37,6 +37,11 @@
         top:0; 
         background: white;
     }
+    #options {
+        background: #eee;
+        text-align: right;
+        padding: 8px;
+    }
     #title {
         font-size: 150%;
         background: black;
@@ -75,7 +80,7 @@
         display: inline-block;
     }
 
-    .track .info {
+    .track .info, div#about {
         padding: 8px;
     }
 
@@ -173,6 +178,7 @@
 $(document).ready(function(){
 	var tracks = [
             <?php
+            $about = null;
             error_reporting(E_ALL);
             
             // create list of tracks to load
@@ -188,6 +194,12 @@ $(document).ready(function(){
                             $name = str_replace(".mp3", "", $entry);
                             $tracks[] = 'new Track({"media": {"mp3": "'.$dir.'/'.$entry.'"}, "title": "'.$name.'"})';
                         }
+                        else if ($entry == "about.html") {
+                            $about = file_get_contents($dir."/".$entry);
+                        }
+                        else if ($entry == "about.txt") {
+                            $about = nl2br(file_get_contents($dir."/".$entry));
+                        }
                     }
                 }
             }
@@ -202,10 +214,7 @@ $(document).ready(function(){
             }
             ?>
         ];
-    <?php
-    $restart = isset($_GET["restart"]) && $_GET["restart"] ? "true" : "false";
-    ?>
-	window.audition = new Audition(tracks, <?=$restart?>);
+	window.audition = new Audition(tracks);
     $(window).resize($.proxy(window.audition.adjustGeometry, window.audition));
 });
 </script>
@@ -215,58 +224,67 @@ $(document).ready(function(){
     <div id="content">
         <div id="top">
             <div id="title">A/B Player</div>
+            <div id="options">
+            	<input id="restart" type="checkbox" <?php if(isset($_GET["restart"]) && $_GET["restart"]) echo "checked"; ?>> restart on select
+            </div>
             
-                <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
-                    <div class="jp-type-single">
-                        <div class="jp-gui jp-interface">
-                            <table style="width:100%" border="0">
-                            <tr>
-                            <td class="td-controls">
-                                <div class="jp-controls">
-                                    <!--<button class="jp-play" role="button" tabindex="0">play</button>-->
-                                    <button class="jp-stop" role="button" tabindex="0">stop</button>
+        	<?php
+        	if ($about) {
+        	    echo '<div id="about">', $about, '</div>';
+        	}
+        	?>
+            
+            <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
+                <div class="jp-type-single">
+                    <div class="jp-gui jp-interface">
+                        <table style="width:100%" border="0">
+                        <tr>
+                        <td class="td-controls">
+                            <div class="jp-controls">
+                                <!--<button class="jp-play" role="button" tabindex="0">play</button>-->
+                                <button class="jp-stop" role="button" tabindex="0">stop</button>
+                            </div>
+                        </td>
+                        <td class="td-seek">
+                            <div class="jp-progress">
+                                <div class="jp-seek-bar">
+                                    <div class="jp-play-bar"></div>
                                 </div>
-                            </td>
-                            <td class="td-seek">
-                                <div class="jp-progress">
-                                    <div class="jp-seek-bar">
-                                        <div class="jp-play-bar"></div>
-                                    </div>
+                            </div>
+                            <div class="jp-time-holder">
+                                <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                                <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                                <!--
+                                <div class="jp-toggles">
+                                    <button class="jp-repeat" role="button" tabindex="0">repeat</button>
                                 </div>
-                                <div class="jp-time-holder">
-                                    <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-                                    <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
-                                    <!--
-                                    <div class="jp-toggles">
-                                        <button class="jp-repeat" role="button" tabindex="0">repeat</button>
-                                    </div>
-                                    -->
-                                </div>
-                            </td>
-                            </td>
-                            <td class="td-volume-controls nonmobile" style="padding-left: 4px;">
-                                <div class="jp-volume-controls">
-                                    <table style="width:100%" cellspacing="0" cellpadding="0"><tr>
-                                        <td class="td-volume-button"><button class="jp-mute" role="button" tabindex="0">mute</button></td>
-                                        <td class="td-volume-bar">
-                                            <div class="jp-volume-bar">
-                                                <div class="jp-volume-bar-value"></div>
-                                            </div>
-                                        </td>
-                                        <td class="td-volume-button" style="padding-right:2px;"><button class="jp-volume-max" role="button" tabindex="0">max volume</button></td>
-                                    </tr></table>
-                                </div>
-                            </td>
-                            </tr>
-                            </table>
-                        </div>
-                        <!--<div class="jp-details"><div class="jp-title" aria-label="title">&nbsp;</div></div>-->
-                        <div class="jp-no-solution">
-                            <span>Update Required</span>
-                            To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-                        </div>
+                                -->
+                            </div>
+                        </td>
+                        </td>
+                        <td class="td-volume-controls nonmobile" style="padding-left: 4px;">
+                            <div class="jp-volume-controls">
+                                <table style="width:100%" cellspacing="0" cellpadding="0"><tr>
+                                    <td class="td-volume-button"><button class="jp-mute" role="button" tabindex="0">mute</button></td>
+                                    <td class="td-volume-bar">
+                                        <div class="jp-volume-bar">
+                                            <div class="jp-volume-bar-value"></div>
+                                        </div>
+                                    </td>
+                                    <td class="td-volume-button" style="padding-right:2px;"><button class="jp-volume-max" role="button" tabindex="0">max volume</button></td>
+                                </tr></table>
+                            </div>
+                        </td>
+                        </tr>
+                        </table>
+                    </div>
+                    <!--<div class="jp-details"><div class="jp-title" aria-label="title">&nbsp;</div></div>-->
+                    <div class="jp-no-solution">
+                        <span>Update Required</span>
+                        To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
                     </div>
                 </div>
+            </div>
 
         </div>
         <div id="main">
