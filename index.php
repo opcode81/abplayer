@@ -41,6 +41,7 @@
         background: #eee;
         text-align: right;
         padding: 8px;
+        padding-bottom: 0;
     }
     #title {
         font-size: 150%;
@@ -227,13 +228,6 @@ $(document).ready(function(){
             <div id="options">
             	<input id="restart" type="checkbox" <?php if(isset($_GET["restart"]) && $_GET["restart"]) echo "checked"; ?>> restart on select
             </div>
-            
-        	<?php
-        	if ($about) {
-        	    echo '<div id="about">', $about, '</div>';
-        	}
-        	?>
-            
             <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
                 <div class="jp-type-single">
                     <div class="jp-gui jp-interface">
@@ -285,9 +279,13 @@ $(document).ready(function(){
                     </div>
                 </div>
             </div>
-
         </div>
         <div id="main">
+        	<?php
+        	if ($about) {
+        	    echo '<div id="about">', $about, '</div>';
+        	}
+        	?>
             <div id="tracks"></div>
         </div>
     </div>
