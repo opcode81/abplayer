@@ -23,7 +23,7 @@ Track.prototype.createPlayer = function() {
 
 Track.prototype.play = function(time) {
 	var t = time !== undefined ? time : currentTime();
-	if ($("#restart").is(":checked"))
+	if ($("#restart").is(":checked") || activePlayer == this.player)
 		t = 0;
 	console.log("playing with currentTime=" + t);
 	this.player.jPlayer('pauseOthers');
