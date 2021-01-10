@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <title>A/B Player</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="lib/jplayer/skin/blue.monday/css/jplayer.black.monday.css" rel="stylesheet" type="text/css" />
 <meta charset="utf-8"> 
@@ -68,8 +69,8 @@
     }
 
     .track {
-        padding:0px; 
-        border:1px solid #ccc; 
+        padding: 0px; 
+        border: 2pt solid #ccc; 
         margin-bottom: 5px; 
         display: block;
         cursor: pointer;
@@ -98,7 +99,7 @@
     }
 
     .playing {
-        border: 1px solid #029ae6;
+        border: 2pt solid #029ae6;
     }
     
     .jp-audio {
