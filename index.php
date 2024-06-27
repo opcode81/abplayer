@@ -50,6 +50,11 @@
         color: white;
         padding: 10px;
     }
+    #revealButton {
+        text-align: middle;
+        width: 100%;
+        height: 3em;
+    }
     #filter {
         padding: 10px;
         border: 1px solid #ccc;
@@ -68,10 +73,12 @@
         display: none;
     }
 
+    .track, div#about {
+        border: 2pt solid #ccc;    
+        margin-bottom: 5px; 
+    }
     .track {
         padding: 0px; 
-        border: 2pt solid #ccc; 
-        margin-bottom: 5px; 
         display: block;
         cursor: pointer;
     }
@@ -96,6 +103,10 @@
         text-decoration: underline;
         display:inline-block; 
         margin-right: 8px;
+    }
+    
+    div#about {
+        font-size: 80%;
     }
 
     .playing {
@@ -216,7 +227,8 @@ $(document).ready(function(){
             }
             ?>
         ];
-	window.audition = new Audition(tracks);
+	<?php $blind = isset($_GET["blind"]) && $_GET["blind"] ? "true" : "false" ?>
+	window.audition = new Audition(tracks, <?php echo $blind; ?>);
     $(window).resize($.proxy(window.audition.adjustGeometry, window.audition));
 });
 </script>
@@ -288,10 +300,9 @@ $(document).ready(function(){
         	}
         	?>
             <div id="tracks"></div>
+            <div id="reveal"><button id="revealButton" class="pointer">Reveal track names</button></div>
         </div>
     </div>
 </body>
-
-
 
 </html>

@@ -12,7 +12,9 @@ A/B player provides a web interface to audition mp3 files. It presents all the f
 2. For every A/B comparison you want an A/B player for, create a sub-directory in `tracks ` containing a set of MP3 files.
 3. Navigate to `http://myserver/abplayer/index.php?d=my-comparison` for an A/B player with the files in `tracks/my-comparison`
 
+
 ### Options
 
 * GET parameter `restart`: when set to a truthy value (e.g. 1), playback will restart from the beginning when switching to a new file.
+* GET parameter `blind`: when set to a truthy value, track names will be hidden initially and can be revealed via a button. 
 * Information on a comparison that will be displayed to users can be provided via a file `about.txt` or `about.html` added to the same folder as the audio tracks.

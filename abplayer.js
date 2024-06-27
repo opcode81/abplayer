@@ -12,6 +12,7 @@ function Track(data) {
     this.selected = false;
     this.$ui = null;
     this.audition = null;
+    this.realTitle = null; 
 };
 
 Track.prototype.createPlayer = function() {
@@ -37,14 +38,25 @@ Track.prototype.jplayer = function() {
 	this.player.jPlayer.apply(this.player.jPlayer, arguments);
 };
 
-function Audition(tracks, restart=false) {
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function Audition(tracks, blind=true) {
+	if (blind)
+		shuffleArray(tracks);
+	
     this.tracks = tracks;
-    this.restart = restart;
+    this.blind = blind;
     this.initUI();
 }
 
 Audition.prototype.initUI = function() {
 	let that = this;
+	
     $tracksContainer = $("#tracks");
     $i = 0;
     $.each(this.tracks, function(_, track) {
@@ -52,7 +64,12 @@ Audition.prototype.initUI = function() {
         $container.append(track.player);
         $info = $('<div class="info"></div>');
         $container.append($info);
-        var $title = $('<div class="title">&#11208;	(' + String.fromCharCode(65+$i) + ")&nbsp;&nbsp;" + track.data.title + '</div>');
+        var trackTitle = track.data.title;
+        if (that.blind) {
+        	track.realTitle = trackTitle;
+        	trackTitle = "hidden";
+        }
+        var $title = $('<div class="title">&#11208;	(' + String.fromCharCode(65+$i) + ')&nbsp;&nbsp;<span id="title' + $i + '">' + trackTitle + '</span></div>');
         $info.append($title);
         var play = function() { track.play(); };
         $container.click(play);
@@ -61,6 +78,20 @@ Audition.prototype.initUI = function() {
         $tracksContainer.append($container);
         ++$i;
     });
+    
+    if (that.blind) {
+    	$("#reveal").show();
+    	$("#revealButton").click(function() {
+    		$i = 0;
+    		$.each(that.tracks, function(_, track) {
+    			$("#title" + $i).text(track.realTitle);
+    			$i++;
+    		});
+    	});
+    }
+    else {
+    	$("#reveal").hide();
+    }
     
     this.adjustGeometry();
 };
