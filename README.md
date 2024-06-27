@@ -4,7 +4,7 @@
 
 A/B player provides a web interface to audition mp3 files. It presents all the files contained in a directory in a simple interface where users can (almost) seamlessly switch between the files and directly compare them. Sound files are presented in lexicographical order and a letter is assigned to each sound file, such that they can more easily be referenced in discussions.
 
-[Click here](http://www.power-xs.de/opcode/abplayer/index.php?d=at4-vs-at5-amps) for a demonstration.
+[Click here](http://www.power-xs.net/opcode/abplayer/index.php?d=marshall&blind=1) for a demonstration.
 
 ## Installation and Usage
 
