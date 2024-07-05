@@ -93,6 +93,12 @@ Audition.prototype.initUI = function() {
     	$("#reveal").hide();
     }
     
+    // make tracks sortable via drag and drop
+    $tracksContainer.sortable({
+      placeholder: "sort-placeholder"
+    });
+    $tracksContainer.disableSelection();
+    
     this.adjustGeometry();
 };
 

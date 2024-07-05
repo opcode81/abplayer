@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="lib/jplayer/skin/blue.monday/css/jplayer.black.monday.css" rel="stylesheet" type="text/css" />
+<link href="lib/jquery-ui.css" rel="stylesheet" type="text/css" />
 <meta charset="utf-8"> 
 <style>
     * { 
@@ -73,7 +74,7 @@
         display: none;
     }
 
-    .track, div#about {
+    .track, div#about, .sort-placeholder {
         border: 2pt solid #ccc;    
         margin-bottom: 5px; 
     }
@@ -81,6 +82,11 @@
         padding: 0px; 
         display: block;
         cursor: pointer;
+        background: white;
+    }
+    .sort-placeholder {
+        height: 3em;
+        background: yellow;
     }
 
     .track .title {
@@ -185,6 +191,7 @@
     }
 </style>
 <script type="text/javascript" src="lib/jquery.min.js"></script>
+<script type="text/javascript" src="lib/jquery-ui.js"></script>
 <script type="text/javascript" src="lib/jplayer/jplayer/jquery.jplayer.min.js"></script>
 <script type="text/javascript" src="abplayer.js"></script>
 <script type="text/javascript">
