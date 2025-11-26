@@ -72,6 +72,8 @@ Audition.prototype.initUI = function() {
         }
         var $title = $('<div class="title">&#11208;	(' + String.fromCharCode(65+$i) + ')&nbsp;&nbsp;<span id="title' + $i + '">' + trackTitle + '</span></div>');
         $info.append($title);
+        var $sortHandle = $('<div class="sort-handle" title="Drag to reorder">&#8942;&#8942;&#8942;</div>');
+        $container.append($sortHandle);
         if (that.blind) {
             var $notes = $('<input type="text" class="track-notes" placeholder="Notes on track ' + String.fromCharCode(65+$i) + ' ..." />');
             $notes.click(function(e) { e.stopPropagation(); });
@@ -110,19 +112,25 @@ Audition.prototype.updateSortable = function() {
     var $tracksContainer = $("#tracks");
     var isMobile = $("#main").width() <= 720;
     
+    // Destroy existing sortable if it exists
+    if ($tracksContainer.hasClass('ui-sortable')) {
+        $tracksContainer.sortable('destroy');
+    }
+    
+    // Create sortable with appropriate settings
+    var sortableOptions = {
+        placeholder: "sort-placeholder"
+    };
+    
     if (isMobile) {
-        // Disable sortable on mobile to allow scrolling
-        if ($tracksContainer.hasClass('ui-sortable')) {
-            $tracksContainer.sortable('destroy');
-        }
-    } else {
-        // Enable sortable on desktop
-        if (!$tracksContainer.hasClass('ui-sortable')) {
-            $tracksContainer.sortable({
-                placeholder: "sort-placeholder"
-            });
-            $tracksContainer.disableSelection();
-        }
+        // On mobile, only allow dragging via the sort handle
+        sortableOptions.handle = ".sort-handle";
+    }
+    
+    $tracksContainer.sortable(sortableOptions);
+    
+    if (!isMobile) {
+        $tracksContainer.disableSelection();
     }
 };
 

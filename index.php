@@ -18,6 +18,9 @@
     html, body {
         text-align: center;
         background: white;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
     }
     body, table, td, th {
         font-family: Calibri, Verdana, sans-serif;
@@ -31,6 +34,12 @@
         background: white;
         padding: 0px;
     }
+    
+    body.mobile div#content {
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
     div#main {
         margin-top:101px;
     }
@@ -38,6 +47,7 @@
         position: fixed; 
         top:0; 
         background: white;
+        box-sizing: border-box;
     }
     #options {
         background: #eee;
@@ -83,6 +93,7 @@
         display: block;
         cursor: pointer;
         background: white;
+        position: relative;
     }
     .sort-placeholder {
         height: 3em;
@@ -118,6 +129,10 @@
     .track .info, div#about {
         padding: 8px;
     }
+    
+    body.mobile .track .info {
+        padding-right: 50px;
+    }
 
     .track img {
         cursor: pointer;
@@ -137,6 +152,28 @@
 
     .playing {
         border: 2pt solid #029ae6;
+    }
+    
+    .sort-handle {
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        color: #ccc;
+        cursor: grab;
+        padding: 10px;
+        user-select: none;
+        display: none;
+    }
+    
+    body.mobile .sort-handle {
+        display: block;
+    }
+    
+    .sort-handle:active {
+        cursor: grabbing;
+        color: #999;
     }
     
     .jp-audio {
@@ -212,6 +249,7 @@
 </style>
 <script type="text/javascript" src="lib/jquery.min.js"></script>
 <script type="text/javascript" src="lib/jquery-ui.js"></script>
+<script type="text/javascript" src="lib/jquery.ui.touch-punch.min.js"></script>
 <script type="text/javascript" src="lib/jplayer/jplayer/jquery.jplayer.min.js"></script>
 <script type="text/javascript" src="abplayer.js"></script>
 <script type="text/javascript">
