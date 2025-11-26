@@ -3,3 +3,6 @@
 .settings
 jplayer-2.9.2
 /deploy.sh
+*.bak
+/.idea
+/.serena
