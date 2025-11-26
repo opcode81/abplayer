@@ -48,12 +48,31 @@
         top:0; 
         background: white;
         box-sizing: border-box;
+        z-index: 1000;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 970px;
+    }
+    
+    body.mobile #top {
+        width: 100%;
+        max-width: 100%;
+        left: 0;
+        transform: none;
     }
     #options {
         background: #eee;
         text-align: right;
         padding: 8px;
         padding-bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 14px;
+    }
+    
+    body.mobile #options {
+        font-size: 12px;
+        text-align: right;
     }
     #title {
         font-size: 150%;
