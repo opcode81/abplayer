@@ -95,6 +95,26 @@
         display: inline-block;
     }
 
+    .track .track-notes {
+        width: 100%;
+        padding: 6px;
+        margin-top: 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 90%;
+        box-sizing: border-box;
+    }
+
+    .track .track-notes:focus {
+        outline: none;
+        border-color: #029ae6;
+    }
+
+    .track .track-notes::placeholder {
+        color: #bbb;
+        opacity: 1;
+    }
+
     .track .info, div#about {
         padding: 8px;
     }

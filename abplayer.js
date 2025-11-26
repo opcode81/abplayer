@@ -12,7 +12,8 @@ function Track(data) {
     this.selected = false;
     this.$ui = null;
     this.audition = null;
-    this.realTitle = null; 
+    this.realTitle = null;
+    this.$notes = null;
 };
 
 Track.prototype.createPlayer = function() {
@@ -71,6 +72,12 @@ Audition.prototype.initUI = function() {
         }
         var $title = $('<div class="title">&#11208;	(' + String.fromCharCode(65+$i) + ')&nbsp;&nbsp;<span id="title' + $i + '">' + trackTitle + '</span></div>');
         $info.append($title);
+        if (that.blind) {
+            var $notes = $('<input type="text" class="track-notes" placeholder="Notes on track ' + String.fromCharCode(65+$i) + ' ..." />');
+            $notes.click(function(e) { e.stopPropagation(); });
+            $info.append($notes);
+            track.$notes = $notes;
+        }
         var play = function() { track.play(); };
         $container.click(play);
         track.$ui = $container;
