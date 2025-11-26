@@ -100,13 +100,30 @@ Audition.prototype.initUI = function() {
     	$("#reveal").hide();
     }
     
-    // make tracks sortable via drag and drop
-    $tracksContainer.sortable({
-      placeholder: "sort-placeholder"
-    });
-    $tracksContainer.disableSelection();
-    
     this.adjustGeometry();
+    
+    // make tracks sortable via drag and drop (only on desktop)
+    this.updateSortable();
+};
+
+Audition.prototype.updateSortable = function() {
+    var $tracksContainer = $("#tracks");
+    var isMobile = $("#main").width() <= 720;
+    
+    if (isMobile) {
+        // Disable sortable on mobile to allow scrolling
+        if ($tracksContainer.hasClass('ui-sortable')) {
+            $tracksContainer.sortable('destroy');
+        }
+    } else {
+        // Enable sortable on desktop
+        if (!$tracksContainer.hasClass('ui-sortable')) {
+            $tracksContainer.sortable({
+                placeholder: "sort-placeholder"
+            });
+            $tracksContainer.disableSelection();
+        }
+    }
 };
 
 Audition.prototype.adjustGeometry = function() {
@@ -122,6 +139,8 @@ Audition.prototype.adjustGeometry = function() {
     else {
         $body.removeClass("mobile");
     }
+    
+    this.updateSortable();
 };
 
 Audition.prototype.stop = function() {
