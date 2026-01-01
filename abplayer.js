@@ -1,5 +1,19 @@
 var activePlayer = null;
 
+// Detect if device has touch capability
+var isTouchDevice = function() {
+	return ('ontouchstart' in window) || 
+	       (navigator.maxTouchPoints > 0) || 
+	       (navigator.msMaxTouchPoints > 0);
+};
+
+// Decide whether to use touch mode (drag handles, etc.)
+var useTouchMode = function() {
+	var isSmallScreen = $("#main").width() <= 720;
+	var hasTouch = isTouchDevice();
+	return hasTouch || isSmallScreen;
+};
+
 var currentTime = function() {
 	if (activePlayer)
 		return activePlayer.data('jPlayer').status.currentTime;
@@ -150,7 +164,7 @@ Audition.prototype.initUI = function() {
 
 Audition.prototype.updateSortable = function() {
     var $tracksContainer = $("#tracks");
-    var isMobile = $("#main").width() <= 720;
+    var touchMode = useTouchMode();
 
     // Destroy existing sortable if it exists
     if ($tracksContainer.hasClass('ui-sortable')) {
@@ -162,14 +176,14 @@ Audition.prototype.updateSortable = function() {
         placeholder: "sort-placeholder"
     };
 
-    if (isMobile) {
-        // On mobile, only allow dragging via the sort handle
+    if (touchMode) {
+        // On touch devices or small screens, only allow dragging via the sort handle
         sortableOptions.handle = ".sort-handle";
     }
 
     $tracksContainer.sortable(sortableOptions);
 
-    if (!isMobile) {
+    if (!touchMode) {
         $tracksContainer.disableSelection();
     }
 };
@@ -276,7 +290,8 @@ Audition.prototype.adjustGeometry = function() {
     $top.width($main.width());
     $main.css("margin-top", ($top.height()+5) + "px");
     $body = $("body");
-    if ($main.width() <= 720) {
+    
+    if (useTouchMode()) {
         $body.addClass("mobile");
     }
     else {

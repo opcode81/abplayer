@@ -33,6 +33,7 @@
         text-align: left;
         background: white;
         padding: 0px;
+        margin-bottom: 15px;
     }
     
     body.mobile div#content {
