@@ -79,6 +79,30 @@
         background: black;
         color: white;
         padding: 10px;
+        position: relative;
+    }
+    #menuBtn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+    #menuBtn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+    #menuBtn svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        stroke: white;
     }
     #revealButton, #copyFeedbackButton {
         text-align: middle;
@@ -347,8 +371,11 @@ $(document).ready(function(){
 <body>
     <div id="content">
         <div id="top">
-            <div id="title">A/B Player</div>
-            <div id="options">
+            <div id="title">
+                A/B Player
+                <button id="menuBtn" role="button" tabindex="0"></button>
+            </div>
+            <div id="options" style="display: none;">
             	<input id="restart" type="checkbox" <?php if(isset($_GET["restart"]) && $_GET["restart"]) echo "checked"; ?>> restart on select
             </div>
             <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">

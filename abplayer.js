@@ -138,6 +138,9 @@ Audition.prototype.initUI = function() {
     
     // Set up pause/play button (completely manual implementation)
     this.setupPausePlayButton();
+    
+    // Set up hamburger menu
+    this.setupMenu();
 
     this.adjustGeometry();
 
@@ -237,6 +240,33 @@ Audition.prototype.setupPausePlayButton = function() {
     
     // Initialize button with square icon (always visible to prevent layout shift)
     updateButton();
+};
+
+Audition.prototype.setupMenu = function() {
+    var $menuBtn = $("#menuBtn");
+    var $options = $("#options");
+    var isMenuOpen = false;
+    
+    // Set hamburger icon
+    $menuBtn.html('<i data-lucide="menu"></i>');
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+    
+    // Toggle menu on click
+    $menuBtn.on("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+            $options.slideDown(200);
+        } else {
+            $options.slideUp(200);
+        }
+        
+        return false;
+    });
 };
 
 Audition.prototype.adjustGeometry = function() {
