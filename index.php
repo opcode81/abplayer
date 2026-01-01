@@ -80,10 +80,13 @@
         color: white;
         padding: 10px;
     }
-    #revealButton {
+    #revealButton, #copyFeedbackButton {
         text-align: middle;
         width: 100%;
         height: 3em;
+    }
+    #copyFeedbackButton {
+        margin-top: 5px;
     }
     #filter {
         padding: 10px;
@@ -384,7 +387,10 @@ $(document).ready(function(){
         	}
         	?>
             <div id="tracks"></div>
-            <div id="reveal"><button id="revealButton" class="pointer">Reveal track names</button></div>
+            <div id="reveal">
+                <button id="revealButton" class="pointer">Reveal track names</button>
+                <button id="copyFeedbackButton" class="pointer" style="display: none;">Copy feedback</button>
+            </div>
         </div>
     </div>
 </body>

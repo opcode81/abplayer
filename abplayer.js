@@ -4,7 +4,7 @@ var currentTime = function() {
 	if (activePlayer)
 		return activePlayer.data('jPlayer').status.currentTime;
 	return 0;
-}
+};
 
 function Track(data) {
 	this.data = data;
@@ -14,14 +14,14 @@ function Track(data) {
     this.audition = null;
     this.realTitle = null;
     this.$notes = null;
-};
+}
 
 Track.prototype.createPlayer = function() {
 	var $jplayer = $('<div id="jquery_jplayer"></div>');
 	$jplayer.jPlayer({});
 	$jplayer.jPlayer('setMedia', this.data.media);
 	return $jplayer;
-}
+};
 
 Track.prototype.play = function(time) {
 	var t = time !== undefined ? time : currentTime();
@@ -95,6 +95,40 @@ Audition.prototype.initUI = function() {
     		$.each(that.tracks, function(_, track) {
     			$("#title" + $i).text(track.realTitle);
     			$i++;
+    		});
+    		// Show the Copy Feedback button after revealing track names
+    		$("#copyFeedbackButton").show();
+    	});
+    	
+    	// add "Copy Feedback" button click handler
+    	$("#copyFeedbackButton").click(function() {
+    		let feedbackText = "";
+    		$i = 0;
+    		// iterate through tracks in their current (user-sorted) order
+    		$("#tracks .track").each(function() {
+    			const trackIndex = that.tracks.findIndex(t => t.$ui[0] === this);
+    			if (trackIndex !== -1) {
+    				const track = that.tracks[trackIndex];
+    				const index = $i + 1;
+    				const notes = track.$notes ? track.$notes.val().trim() : "";
+    				feedbackText += index + ": " + track.realTitle;
+    				if (notes) {
+    					feedbackText += " - " + notes;
+    				}
+    				feedbackText += "\n";
+    				$i++;
+    			}
+    		});
+    		// copy to clipboard
+    		navigator.clipboard.writeText(feedbackText).then(function() {
+    			// provide visual feedback
+    			const originalText = $("#copyFeedbackButton").text();
+    			$("#copyFeedbackButton").text("Copied!");
+    			setTimeout(function() {
+    				$("#copyFeedbackButton").text(originalText);
+    			}, 2000);
+    		}).catch(function(err) {
+    			alert("Failed to copy to clipboard: " + err);
     		});
     	});
     }
