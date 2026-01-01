@@ -84,10 +84,26 @@ Audition.prototype.initUI = function() {
         	track.realTitle = trackTitle;
         	trackTitle = "hidden";
         }
-        var $title = $('<div class="title"><i data-lucide="play" class="track-play-icon"></i>(' + String.fromCharCode(65+$i) + ')&nbsp;&nbsp;<span id="title' + $i + '">' + trackTitle + '</span></div>');
-        $info.append($title);
-        var $sortHandle = $('<div class="sort-handle" title="Drag to reorder">&#8942;&#8942;&#8942;</div>');
-        $container.append($sortHandle);
+        // Create track header with play button, letter circle, track name, and reorder icon
+        var $header = $('<div class="track-header"></div>');
+        
+        // Play button icon
+        var $playIcon = $('<div class="track-play-btn"><i data-lucide="play"></i></div>');
+        $header.append($playIcon);
+        
+        // Letter circle
+        var $letter = $('<div class="track-letter">' + String.fromCharCode(65+$i) + '</div>');
+        $header.append($letter);
+        
+        // Track name (wrappable)
+        var $trackName = $('<div class="track-name"><span id="title' + $i + '">' + trackTitle + '</span></div>');
+        $header.append($trackName);
+        
+        // Reorder handle
+        var $sortHandle = $('<div class="sort-handle" title="Drag to reorder"><i data-lucide="grip-vertical"></i></div>');
+        $header.append($sortHandle);
+        
+        $info.append($header);
         if (that.blind) {
             var $notes = $('<input type="text" class="track-notes" placeholder="Notes on track ' + String.fromCharCode(65+$i) + ' ..." />');
             $notes.click(function(e) { e.stopPropagation(); });

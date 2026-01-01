@@ -141,25 +141,60 @@
         cursor: pointer;
         background: white;
         position: relative;
+        overflow: visible;
     }
     .sort-placeholder {
         height: 3em;
         background: yellow;
     }
 
-    .track .title {
-        font-size: 120%;
+    .track-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
         padding-bottom: 10px;
-        display: inline-block;
+        overflow: visible;
     }
     
-    .track-play-icon {
+    body.mobile .track-header {
+        gap: 6px;
+    }
+    
+    .track-play-btn {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    
+    .track-play-btn svg {
         width: 20px;
         height: 20px;
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 8px;
         stroke: #029ae6;
+    }
+    
+    .track-letter {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        color: #666;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    
+    .track-name {
+        flex-grow: 1;
+        font-size: 120%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .track .track-notes {
@@ -182,12 +217,17 @@
         opacity: 1;
     }
 
-    .track .info, div#about {
+    .track .info {
         padding: 8px;
+        overflow: visible;
     }
     
     body.mobile .track .info {
-        padding-right: 50px;
+        padding-right: 16px;
+    }
+    
+    div#about {
+        padding: 8px;
     }
 
     .track img {
@@ -211,25 +251,32 @@
     }
     
     .sort-handle {
-        position: absolute;
-        right: 0px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 24px;
-        color: #ccc;
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
         cursor: grab;
-        padding: 10px;
         user-select: none;
         display: none;
     }
     
+    .sort-handle svg {
+        width: 24px;
+        height: 24px;
+        stroke: #ccc;
+    }
+    
     body.mobile .sort-handle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .sort-handle:active {
         cursor: grabbing;
-        color: #999;
+    }
+    
+    .sort-handle:active svg {
+        stroke: #999;
     }
     
     .jp-audio {
