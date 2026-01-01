@@ -136,8 +136,11 @@ Audition.prototype.initUI = function() {
     	$("#reveal").hide();
     }
     
+    // Set up pause/play button (completely manual implementation)
+    this.setupPausePlayButton();
+
     this.adjustGeometry();
-    
+
     // make tracks sortable via drag and drop (only on desktop)
     this.updateSortable();
 };
@@ -145,27 +148,95 @@ Audition.prototype.initUI = function() {
 Audition.prototype.updateSortable = function() {
     var $tracksContainer = $("#tracks");
     var isMobile = $("#main").width() <= 720;
-    
+
     // Destroy existing sortable if it exists
     if ($tracksContainer.hasClass('ui-sortable')) {
         $tracksContainer.sortable('destroy');
     }
-    
+
     // Create sortable with appropriate settings
     var sortableOptions = {
         placeholder: "sort-placeholder"
     };
-    
+
     if (isMobile) {
         // On mobile, only allow dragging via the sort handle
         sortableOptions.handle = ".sort-handle";
     }
-    
+
     $tracksContainer.sortable(sortableOptions);
-    
+
     if (!isMobile) {
         $tracksContainer.disableSelection();
     }
+};
+
+Audition.prototype.setupPausePlayButton = function() {
+    var that = this;
+    var $btn = $("#pausePlayBtn");
+    var isPlaying = false;
+
+    // Update button appearance manually with Lucide icons
+    var updateButton = function() {
+        $btn.empty();
+        if (!activePlayer) {
+            // No active player - show square (stop-like) icon
+            $btn.html('<i data-lucide="square"></i>');
+        } else if (isPlaying) {
+            // Playing state - show pause icon
+            $btn.html('<i data-lucide="pause"></i>');
+        } else {
+            // Paused state - show play icon
+            $btn.html('<i data-lucide="play"></i>');
+        }
+        $btn.css("display", "block");
+        
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    };
+
+    // Button click handler
+    $btn.on("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!activePlayer) {
+            return false;
+        }
+
+        if (isPlaying) {
+            // Currently playing, so pause
+            activePlayer.jPlayer('pause');
+        } else {
+            // Currently paused, so play
+            activePlayer.jPlayer('play');
+        }
+
+        return false;
+    });
+
+    // Listen to play events on all tracks
+    $.each(that.tracks, function(_, track) {
+        track.player.on($.jPlayer.event.play, function() {
+            isPlaying = true;  // Now playing, so button should show pause
+            updateButton();
+        });
+
+        track.player.on($.jPlayer.event.pause, function() {
+            isPlaying = false;  // Now paused, so button should show play
+            updateButton();
+        });
+
+        track.player.on($.jPlayer.event.ended, function() {
+            isPlaying = false;  // Ended, button should show play
+            updateButton();
+        });
+    });
+    
+    // Initialize button with square icon (always visible to prevent layout shift)
+    updateButton();
 };
 
 Audition.prototype.adjustGeometry = function() {

@@ -223,6 +223,28 @@
         margin: 0px;
     }
     
+    #pausePlayBtn {
+        width: 28px;
+        height: 28px;
+        margin-top: 6px;
+        margin-right: 6px;
+        padding: 4px;
+        border: 1px solid #666;
+        background: #ddd;
+        cursor: pointer;
+        display: block;
+        box-sizing: border-box;
+    }
+    #pausePlayBtn:hover {
+        background: #ccc;
+    }
+    #pausePlayBtn svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        stroke: #029ae6;
+    }
+
     /* seek bar */
     td.td-seek {
         padding-top: 8px;
@@ -239,27 +261,27 @@
         width: 100%;
         top: 0px;
     }
-    
+
     /* volume controls */
     td.td-volume-controls {
         padding-top: 8px;
         width: 20%;
-    }    
+    }
     .jp-volume-controls {
-        position: relative; 
+        position: relative;
         top: 0;
         left: 0;
         width: 100%;
     }
     .jp-volume-controls button {
-        position: relative; 
+        position: relative;
         display: inline-block;
     }
     td.td-volume-button {
         width: 20px;
     }
     .jp-volume-bar {
-        width: 100%; 
+        width: 100%;
         position: relative;
         display: inline-block;
         left: 0;
@@ -269,6 +291,7 @@
         left: 5px;
     }
 </style>
+<script src="https://unpkg.com/lucide@latest"></script>
 <script type="text/javascript" src="lib/jquery.min.js"></script>
 <script type="text/javascript" src="lib/jquery-ui.js"></script>
 <script type="text/javascript" src="lib/jquery.ui.touch-punch.min.js"></script>
@@ -280,7 +303,7 @@ $(document).ready(function(){
             <?php
             $about = null;
             error_reporting(E_ALL);
-            
+
             // create list of tracks to load
             $tracks = array();
             if (isset($_GET["d"])) {
@@ -303,7 +326,7 @@ $(document).ready(function(){
                     }
                 }
             }
-            
+
             // write JS array
             sort($tracks);
             $i = 0;
@@ -335,8 +358,7 @@ $(document).ready(function(){
                         <tr>
                         <td class="td-controls">
                             <div class="jp-controls">
-                                <!--<button class="jp-play" role="button" tabindex="0">play</button>-->
-                                <button class="jp-stop" role="button" tabindex="0">stop</button>
+                                <button id="pausePlayBtn" role="button" tabindex="0"></button>
                             </div>
                         </td>
                         <td class="td-seek">
