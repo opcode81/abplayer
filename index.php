@@ -152,6 +152,15 @@
         padding-bottom: 10px;
         display: inline-block;
     }
+    
+    .track-play-icon {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 8px;
+        stroke: #029ae6;
+    }
 
     .track .track-notes {
         width: 100%;

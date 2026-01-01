@@ -84,7 +84,7 @@ Audition.prototype.initUI = function() {
         	track.realTitle = trackTitle;
         	trackTitle = "hidden";
         }
-        var $title = $('<div class="title">&#11208;	(' + String.fromCharCode(65+$i) + ')&nbsp;&nbsp;<span id="title' + $i + '">' + trackTitle + '</span></div>');
+        var $title = $('<div class="title"><i data-lucide="play" class="track-play-icon"></i>(' + String.fromCharCode(65+$i) + ')&nbsp;&nbsp;<span id="title' + $i + '">' + trackTitle + '</span></div>');
         $info.append($title);
         var $sortHandle = $('<div class="sort-handle" title="Drag to reorder">&#8942;&#8942;&#8942;</div>');
         $container.append($sortHandle);
@@ -148,6 +148,11 @@ Audition.prototype.initUI = function() {
     }
     else {
     	$("#reveal").hide();
+    }
+    
+    // Initialize Lucide icons for track play icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
     }
     
     // Set up pause/play button (completely manual implementation)
