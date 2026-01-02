@@ -80,6 +80,7 @@ Audition.prototype.initUI = function() {
         $info = $('<div class="info"></div>');
         $container.append($info);
         var trackTitle = track.data.title;
+        trackTitle = trackTitle.replace(/_/g, ' ');
         if (that.blind) {
         	track.realTitle = trackTitle;
         	trackTitle = "hidden";
@@ -99,11 +100,11 @@ Audition.prototype.initUI = function() {
         var $trackName = $('<div class="track-name"><span id="title' + $i + '">' + trackTitle + '</span></div>');
         $header.append($trackName);
         
-        // Reorder handle
-        var $sortHandle = $('<div class="sort-handle" title="Drag to reorder"><i data-lucide="grip-vertical"></i></div>');
-        $header.append($sortHandle);
-        
         $info.append($header);
+        
+        // Reorder handle (positioned absolutely, not in flexbox)
+        var $sortHandle = $('<div class="sort-handle" title="Drag to reorder">&#8942;&#8942;&#8942;</div>');
+        $container.append($sortHandle);
         if (that.blind) {
             var $notes = $('<input type="text" class="track-notes" placeholder="Notes on track ' + String.fromCharCode(65+$i) + ' ..." />');
             $notes.click(function(e) { e.stopPropagation(); });

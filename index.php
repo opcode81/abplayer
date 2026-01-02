@@ -152,7 +152,6 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        padding-bottom: 10px;
         overflow: visible;
     }
     
@@ -181,13 +180,14 @@
         width: 24px;
         height: 24px;
         border-radius: 50%;
-        background: #e0e0e0;
-        color: #666;
+        background: #f0f0f0;
+        color: #000;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        font-size: 14px;
+        font-size: 13px;
+        border: 1px solid #ddd;
     }
     
     .track-name {
@@ -195,6 +195,7 @@
         font-size: 120%;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        padding-left: 4px;
     }
 
     .track .track-notes {
@@ -223,7 +224,7 @@
     }
     
     body.mobile .track .info {
-        padding-right: 16px;
+        padding-right: 30px;
     }
     
     div#about {
@@ -251,24 +252,24 @@
     }
     
     .sort-handle {
-        flex-shrink: 0;
-        width: 24px;
-        height: 24px;
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        color: #ccc;
         cursor: grab;
+        padding: 10px;
         user-select: none;
         display: none;
     }
     
     .sort-handle svg {
-        width: 24px;
-        height: 24px;
-        stroke: #ccc;
+        stroke: currentColor;
     }
     
     body.mobile .sort-handle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: block;
     }
     
     .sort-handle:active {
