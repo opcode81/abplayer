@@ -32,7 +32,7 @@ function Track(data) {
 
 Track.prototype.createPlayer = function() {
 	var $jplayer = $('<div id="jquery_jplayer"></div>');
-	$jplayer.jPlayer({});
+	$jplayer.jPlayer({"supplied": "wav, mp3"});
 	$jplayer.jPlayer('setMedia', this.data.media);
 	return $jplayer;
 };

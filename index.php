@@ -387,6 +387,7 @@ $(document).ready(function(){
             error_reporting(E_ALL);
 
             // create list of tracks to load
+            $extensions = array("mp3", "wav");
             $tracks = array();
             if (isset($_GET["d"])) {
                 $dir = $_GET["d"];
@@ -395,11 +396,13 @@ $(document).ready(function(){
                 $dir = "tracks/$dir";
                 if ($handle = opendir($dir)) {
                     while (false !== ($entry = readdir($handle))) {
-                        if (substr($entry, -4) === ".mp3") {
-                            $name = str_replace(".mp3", "", $entry);
-                            $tracks[] = 'new Track({"media": {"mp3": "'.$dir.'/'.$entry.'"}, "title": "'.$name.'"})';
+                        foreach ($extensions as $ext) {
+                            if (substr($entry, -(1+strlen($ext))) === ".$ext") {
+                                $name = str_replace(".$ext", "", $entry);
+                                $tracks[] = 'new Track({"media": {"'.$ext.'": "'.$dir.'/'.$entry.'"}, "title": "'.$name.'"})';
+                            }
                         }
-                        else if ($entry == "about.html") {
+                        if ($entry == "about.html") {
                             $about = file_get_contents($dir."/".$entry);
                         }
                         else if ($entry == "about.txt") {
